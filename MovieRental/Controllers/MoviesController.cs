@@ -78,7 +78,7 @@ namespace MovieRental.Controllers
         public ActionResult New()
         {
             var genres = _context.Genres.ToList();
-            var viewModel = new MovieViewModel
+            var viewModel = new MovieFormViewModel
             {
                 Genres = genres
             };
@@ -93,7 +93,7 @@ namespace MovieRental.Controllers
                 return HttpNotFound();
 
             var genres = _context.Genres.ToList();
-            var viewModel = new MovieViewModel
+            var viewModel = new MovieFormViewModel
             {
                 Movie = movie,
                 Genres = genres

@@ -6,7 +6,7 @@ using System.Web;
 
 namespace MovieRental.ViewModels
 {
-    public class MovieViewModel
+    public class MovieFormViewModel
     {
         public Movie Movie { get; set; }
 
