@@ -1,0 +1,97 @@
+﻿using MovieRental.Models;
+using MovieRental.ViewModels;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity.Infrastructure.MappingViews;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+
+namespace MovieRental.Controllers
+{
+    public class CustomersController : Controller
+    {
+        private MovieRentalDbContext _context;
+
+        public CustomersController()
+        {
+            _context = new MovieRentalDbContext();
+        }
+
+        // GET: Customers
+        public ActionResult Index()
+        {
+            //Ef is not goind to execute this query in DB, this is called deferred execution
+            //It is executed when we iterate customer object
+            //To execute it immediately add ToList() method
+            var customers = _context.Customers.Include(nameof(Customer.MembershipType)).ToList();
+            return View(customers);
+        }
+
+        public ActionResult Details(int id)
+        {
+            var customer = _context.Customers.Include(nameof(Customer.MembershipType)).SingleOrDefault(obj => obj.Id == id);
+            if (customer == null)
+                return HttpNotFound();
+
+            return View(customer);
+        }
+
+        public ActionResult New()
+        {
+            var membershipTypes = _context.MembershipTypes.ToList();
+            var viewModel = new CustomerFormViewModel
+            {
+                MembershipTypes = membershipTypes
+            };
+
+            return View("AddEditForm", viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult Save(Customer customer)
+        {
+            if (customer.Id == 0)
+                _context.Customers.Add(customer);
+            else
+            {
+                var customerInDb = _context.Customers.Single(c => c.Id == customer.Id);
+                //Using this method to update the complete object is not suggested because of security issues
+                //There may be some properties which are not present in the form or should not be updated
+                //but if someone pass the object with those values, then because of using this method, all
+                //properties will be updated
+                //TryUpdateModel(customerInDb);
+
+                customerInDb.BirthDate = customer.BirthDate;
+                customerInDb.IsSubscribedToNewsLetter = customer.IsSubscribedToNewsLetter;
+                customerInDb.MembershipTypeId = customer.MembershipTypeId;
+                customerInDb.Name = customer.Name;
+            }
+
+            _context.SaveChanges();
+            return RedirectToAction(nameof(Index), "Customers");
+        }
+
+        public ActionResult Edit(int id)
+        {
+            var customer = _context.Customers.SingleOrDefault(c => c.Id == id);
+            if (customer == null)
+                return HttpNotFound();
+
+            var membershipTypes = _context.MembershipTypes.ToList();
+            var viewModel = new CustomerFormViewModel
+            {
+                Customer = customer,
+                MembershipTypes = membershipTypes
+            };
+
+            //ovveride naming convention for view with existing view name
+            return View("AddEditForm", viewModel);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            _context.Dispose();
+        }
+    }
+}
