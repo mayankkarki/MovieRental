@@ -18,36 +18,6 @@ namespace MovieRental.Controllers
             _context = new MovieRentalDbContext();
         }
 
-        // GET: Movies/Random
-        public ActionResult Random()
-        {
-            var movie = new Movie() { Name = "3 Idiots!" };
-
-            var customers = new List<Customer>()
-            {
-            new Customer{ Name = "Customer 1"},
-            new Customer{ Name = "Customer 2"}
-            };
-
-            var viewModel = new RandomMovieViewModel()
-            {
-                Movie = movie,
-                Customers = customers
-            };
-
-            return View(viewModel);
-
-            //var viewResult = new ViewResult();
-            //viewdata dictionary has model property which act as source of key value pairs
-            //viewResult.ViewData.Model = movie;
-            //return viewResult;
-
-            //return Content("Hello world");
-            //return HttpNotFound();
-            //return new EmptyResult();
-            //return RedirectToAction("Index", "Home", new { page = 1, sortBy = "Name" });
-        }
-
         public ActionResult Details(int id)
         {
             var movie = _context.Movies.Include(nameof(Movie.Genre)).SingleOrDefault(obj => obj.Id == id);
