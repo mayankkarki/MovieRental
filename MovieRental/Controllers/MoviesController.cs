@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.WebSockets;
 
 namespace MovieRental.Controllers
 {
@@ -80,7 +81,8 @@ namespace MovieRental.Controllers
             var genres = _context.Genres.ToList();
             var viewModel = new MovieFormViewModel
             {
-                Genres = genres
+                Genres = genres,
+                Movie = new Movie()
             };
 
             return View("AddEditForm", viewModel);
@@ -103,8 +105,21 @@ namespace MovieRental.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Save(Movie movie)
         {
+            if (!ModelState.IsValid)
+            {
+                var genres = _context.Genres.ToList();
+                var viewModel = new MovieFormViewModel
+                {
+                    Movie = movie,
+                    Genres = genres
+                };
+
+                return View("AddEditForm", viewModel);
+            }
+
             if (movie.Id == 0)
             {
                 movie.DateAdded = DateTime.Now;
