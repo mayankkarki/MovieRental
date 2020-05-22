@@ -27,6 +27,7 @@ namespace MovieRental.Models
 
         public Genre Genre { get; set; }
 
+        [Required]
         [Display(Name = "Genre")]
         public short GenreId { get; set; }
 

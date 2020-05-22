@@ -20,5 +20,9 @@ namespace MovieRental.Models
 
         public byte DiscountRate { get; set; }
 
+        public const byte UnknownId = 0;
+
+        public const byte PayAsYouGoId = 1;
+
     }
 }
