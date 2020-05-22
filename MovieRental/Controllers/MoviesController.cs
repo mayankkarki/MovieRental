@@ -81,8 +81,7 @@ namespace MovieRental.Controllers
             var genres = _context.Genres.ToList();
             var viewModel = new MovieFormViewModel
             {
-                Genres = genres,
-                Movie = new Movie()
+                Genres = genres              
             };
 
             return View("AddEditForm", viewModel);
@@ -95,9 +94,8 @@ namespace MovieRental.Controllers
                 return HttpNotFound();
 
             var genres = _context.Genres.ToList();
-            var viewModel = new MovieFormViewModel
-            {
-                Movie = movie,
+            var viewModel = new MovieFormViewModel(movie)
+            {               
                 Genres = genres
             };
 
@@ -111,9 +109,8 @@ namespace MovieRental.Controllers
             if (!ModelState.IsValid)
             {
                 var genres = _context.Genres.ToList();
-                var viewModel = new MovieFormViewModel
-                {
-                    Movie = movie,
+                var viewModel = new MovieFormViewModel(movie)
+                {                 
                     Genres = genres
                 };
 

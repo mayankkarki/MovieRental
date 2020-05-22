@@ -17,12 +17,10 @@ namespace MovieRental.Models
         [Required]
         public DateTime DateAdded { get; set; }
 
-        [Required()]
-        [Display(Name = "Release Date")]
+        [Required()]     
         public DateTime DateReleased { get; set; }
 
-        [Required]
-        [Display(Name = "Number in Stock")]
+        [Required]      
         [Range(1, 25)]
         public short NumberInStock { get; set; }
 
