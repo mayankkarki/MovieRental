@@ -86,12 +86,37 @@ namespace MovieRental.Controllers
             return View("AddEditForm", viewModel);
         }
 
+        public ActionResult Edit(int id)
+        {
+            var movie = _context.Movies.SingleOrDefault(m => m.Id == id);
+            if (movie == null)
+                return HttpNotFound();
+
+            var genres = _context.Genres.ToList();
+            var viewModel = new MovieViewModel
+            {
+                Movie = movie,
+                Genres = genres
+            };
+
+            return View("AddEditForm", viewModel);
+        }
+
         [HttpPost]
         public ActionResult Save(Movie movie)
         {
-            _context.Movies.Add(movie);
-            _context.SaveChanges();
+            if (movie.Id == 0)
+                _context.Movies.Add(movie);
+            else
+            {
+                var movieInDb = _context.Movies.Single(m => m.Id == movie.Id);
+                movieInDb.DateReleased = movie.DateReleased;
+                movieInDb.GenreId = movie.GenreId;
+                movieInDb.Name = movie.Name;
+                movieInDb.NumberInStock = movie.NumberInStock;
+            }
 
+            _context.SaveChanges();
             return RedirectToAction(nameof(Index));
         }
 
