@@ -1,5 +1,4 @@
-﻿@model IEnumerable<MovieRental.Models.Customer>
-@{
+﻿@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -10,42 +9,22 @@
     @Html.ActionLink("New Customer", "New", null, htmlAttributes: new { @class = "btn btn-primary" })
 </p>
 
-@if (!Model.Any())
-{
-    <p>We don't have any customers yet</p>
-}
-else
-{
-    <table id="customersTable" class="table table-bordered table-hover">
-        <thead>
-            <tr>
-                <th>
-                    Customer
-                </th>
-                <th>
-                    Membership Type
-                </th>
-                <th>Delete</th>
-            </tr>          
-        </thead>
-        <tbody>
-            @foreach (var customer in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.ActionLink(customer.Name, "Edit", new { id = customer.Id })
-                    </td>
-                    <td>
-                        @customer.MembershipType.Name
-                    </td>
-                    <td>
-                        <button customer-id="@customer.Id" class="btn-link js-delete">Delete</button>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-}
+<table id="customersTable" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>
+                Customer
+            </th>
+            <th>
+                Membership Type
+            </th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
 @section scripts
 {
     <script>
@@ -55,7 +34,29 @@ else
             //to use for search
             //To prevent this, better use api to get json result and html is generated at client side
             //and datables will get data without filtering from html
-            $("#customersTable").DataTable();
+            $("#customersTable").DataTable({
+                ajax: {
+                    url: "/api/customers",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "name",
+                        render: function (data, type, customer) {
+                            return "<a href='customers/edit/" + customer.id + "'>" + data + "</a>"
+                        }
+                    },
+                    {
+                        data: "name"
+                    },
+                    {
+                        data: "id",
+                        render: function (data) {
+                            return "<button customer-id='" + data + "' class='btn-link js-delete'>Delete</button>";
+                        }
+                    }
+                ]
+            });
 
             $("#customersTable").on("click", ".js-delete", function () {
                 var button = $(this);

@@ -21,11 +21,7 @@ namespace MovieRental.Controllers
         // GET: Customers
         public ActionResult Index()
         {
-            //Ef is not goind to execute this query in DB, this is called deferred execution
-            //It is executed when we iterate customer object
-            //To execute it immediately add ToList() method
-            var customers = _context.Customers.Include(nameof(Customer.MembershipType)).ToList();
-            return View(customers);
+            return View();
         }
 
         public ActionResult Details(int id)
