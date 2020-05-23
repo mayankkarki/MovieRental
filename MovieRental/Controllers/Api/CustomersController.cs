@@ -1,54 +1,61 @@
-﻿using MovieRental.Models;
+﻿using AutoMapper;
+using MovieRental.Dtos;
+using MovieRental.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.WebSockets;
 
 namespace MovieRental.Controllers.Api
 {
     public class CustomersController : ApiController
     {
         private MovieRentalDbContext _context;
+        private Mapper _mapperInstance;
 
         public CustomersController()
         {
             _context = new MovieRentalDbContext();
+            _mapperInstance = new Mapper(MvcApplication.AutoMapperConfiguation);
         }
 
         //Get api/customers
-        public IEnumerable<Customer> GetCustomers()
+        public IEnumerable<CustomerDto> GetCustomers()
         {
-            return _context.Customers.ToList();
+            return _context.Customers.ToList().Select(_mapperInstance.Map<Customer, CustomerDto>);
         }
 
         //Get api/customers/1
-        public Customer GetCustomer(int id)
+        public CustomerDto GetCustomer(int id)
         {
             var customer = _context.Customers.SingleOrDefault(c => c.Id == id);
             if (customer == null)
                 throw new HttpResponseException(HttpStatusCode.NotFound);
 
-            return customer;
+            return _mapperInstance.Map<Customer, CustomerDto>(customer);
         }
 
         //Post api/customers
         [HttpPost]
-        public Customer CreateCustomer(Customer customer)
+        public CustomerDto CreateCustomer(CustomerDto customerDto)
         {
             if (!ModelState.IsValid)
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
 
+            var customer = _mapperInstance.Map<CustomerDto, Customer>(customerDto);
             _context.Customers.Add(customer);
             _context.SaveChanges();
 
-            return customer;
+            customerDto.Id = customer.Id;
+            return customerDto;
         }
 
         //Put api/customers/1
         [HttpPut]
-        public void UpdateCustomer(int id, Customer customer)
+        public void UpdateCustomer(int id, CustomerDto customerDto)
         {
             if (!ModelState.IsValid)
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
@@ -57,11 +64,7 @@ namespace MovieRental.Controllers.Api
             if (customerInDb == null)
                 throw new HttpResponseException(HttpStatusCode.NotFound);
 
-            customerInDb.BirthDate = customer.BirthDate;
-            customerInDb.IsSubscribedToNewsLetter = customer.IsSubscribedToNewsLetter;
-            customerInDb.MembershipTypeId = customer.MembershipTypeId;
-            customerInDb.Name = customer.Name;
-
+            _mapperInstance.Map(customerDto, customerInDb);            
             _context.SaveChanges();
         }
 
