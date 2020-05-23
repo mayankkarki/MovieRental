@@ -40,12 +40,27 @@ namespace MovieRental.Controllers
         public ActionResult New()
         {
             var membershipTypes = _context.MembershipTypes.ToList();
-            var viewModel = new CustomerFormViewModel
-            {
-                Customer = new Customer(),
+            var viewModel = new CustomerFormViewModel()
+            {                
                 MembershipTypes = membershipTypes
             };
 
+            return View("AddEditForm", viewModel);
+        }
+
+        public ActionResult Edit(int id)
+        {
+            var customer = _context.Customers.SingleOrDefault(c => c.Id == id);
+            if (customer == null)
+                return HttpNotFound();
+
+            var membershipTypes = _context.MembershipTypes.ToList();
+            var viewModel = new CustomerFormViewModel(customer)
+            {              
+                MembershipTypes = membershipTypes
+            };
+
+            //ovveride naming convention for view with existing view name
             return View("AddEditForm", viewModel);
         }
 
@@ -56,9 +71,8 @@ namespace MovieRental.Controllers
             if (!ModelState.IsValid)
             {
                 var membershipTypes = _context.MembershipTypes.ToList();
-                var viewModel = new CustomerFormViewModel
-                {
-                    Customer = customer,
+                var viewModel = new CustomerFormViewModel(customer)
+                {                    
                     MembershipTypes = membershipTypes
                 };
                              
@@ -84,23 +98,6 @@ namespace MovieRental.Controllers
 
             _context.SaveChanges();
             return RedirectToAction(nameof(Index), "Customers");
-        }
-
-        public ActionResult Edit(int id)
-        {
-            var customer = _context.Customers.SingleOrDefault(c => c.Id == id);
-            if (customer == null)
-                return HttpNotFound();
-
-            var membershipTypes = _context.MembershipTypes.ToList();
-            var viewModel = new CustomerFormViewModel
-            {
-                Customer = customer,
-                MembershipTypes = membershipTypes
-            };
-
-            //ovveride naming convention for view with existing view name
-            return View("AddEditForm", viewModel);
         }
 
         protected override void Dispose(bool disposing)
