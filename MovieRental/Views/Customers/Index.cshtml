@@ -17,35 +17,46 @@
 else
 {
     <table id="customersTable" class="table table-bordered table-hover">
-        <tr>
-            <th>
-                Customer
-            </th>
-            <th>
-                Membership Type
-            </th>
-            <th></th>
-        </tr>
-        @foreach (var customer in Model)
-        {
+        <thead>
             <tr>
-                <td>
-                    @Html.ActionLink(customer.Name, "Edit", new { id = customer.Id })
-                </td>
-                <td>
-                    @customer.MembershipType.Name
-                </td>
-                <td>
-                    <button customer-id="@customer.Id" class="btn-link js-delete">Delete</button>
-                </td>
-            </tr>
-        }
+                <th>
+                    Customer
+                </th>
+                <th>
+                    Membership Type
+                </th>
+                <th>Delete</th>
+            </tr>          
+        </thead>
+        <tbody>
+            @foreach (var customer in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.ActionLink(customer.Name, "Edit", new { id = customer.Id })
+                    </td>
+                    <td>
+                        @customer.MembershipType.Name
+                    </td>
+                    <td>
+                        <button customer-id="@customer.Id" class="btn-link js-delete">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
     </table>
 }
 @section scripts
 {
     <script>
         $(document).ready(new function () {
+            //by using this approach, datatble is rendered on server and markup is returned
+            //to browser, where jquery table filters data from markup and and build a table in local
+            //to use for search
+            //To prevent this, better use api to get json result and html is generated at client side
+            //and datables will get data without filtering from html
+            $("#customersTable").DataTable();
+
             $("#customersTable").on("click", ".js-delete", function () {
                 var button = $(this);
                 bootbox.confirm("Are you sure you want to delete this customer?", function (result) {
