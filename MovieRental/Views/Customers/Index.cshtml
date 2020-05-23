@@ -16,7 +16,7 @@
 }
 else
 {
-    <table class="table table-bordered table-hover">
+    <table id="customersTable" class="table table-bordered table-hover">
         <tr>
             <th>
                 Customer
@@ -24,6 +24,7 @@ else
             <th>
                 Membership Type
             </th>
+            <th></th>
         </tr>
         @foreach (var customer in Model)
         {
@@ -34,7 +35,36 @@ else
                 <td>
                     @customer.MembershipType.Name
                 </td>
+                <td>
+                    <button customer-id="@customer.Id" class="btn-link js-delete">Delete</button>
+                </td>
             </tr>
         }
     </table>
+}
+@section scripts
+{
+    <script>
+        $(document).ready(new function () {
+            $("#customersTable").on("click", ".js-delete", function () {
+                var button = $(this);
+                bootbox.confirm("Are you sure you want to delete this customer?", function (result) {
+                    if (result) {
+                        $.ajax({
+                            url: "/api/customers/" + button.attr("customer-id"),
+                            method: "DELETE",
+                            success: function () {
+                                //console.log("success");
+                                button.parents("tr").remove();
+                            }
+                        });
+                    }
+                });
+
+                //if (confirm("Are you sure you want to delete this customer?")) {
+
+                //}
+            });
+        });
+    </script>
 }
