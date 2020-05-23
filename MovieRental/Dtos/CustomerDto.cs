@@ -17,7 +17,7 @@ namespace MovieRental.Dtos
 
         public bool IsSubscribedToNewsLetter { get; set; }
 
-        [Min18YearsIfAMember]
+        //[Min18YearsIfAMember]
         public DateTime? BirthDate { get; set; }
 
         [Required]
