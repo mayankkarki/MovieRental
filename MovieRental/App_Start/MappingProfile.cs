@@ -12,7 +12,8 @@ namespace MovieRental.App_Start
     {
         public MappingProfile()
         {
-            CreateMap<Customer, CustomerDto>().ReverseMap();            
+            CreateMap<Customer, CustomerDto>().ReverseMap().ForMember(dest => dest.Id, opt => opt.Ignore());
+            CreateMap<Movie, MovieDto>().ReverseMap().ForMember(dest => dest.Id, opt => opt.Ignore());
         }
     }
 }
