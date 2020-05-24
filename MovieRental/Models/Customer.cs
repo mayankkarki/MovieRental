@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MovieRental.CustomValidations;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -16,13 +17,14 @@ namespace MovieRental.Models
 
         public bool IsSubscribedToNewsLetter { get; set; }
 
-        [Display(Name = "Date of birth")]
+     
+        [Min18YearsIfAMember]
         public DateTime? BirthDate { get; set; }
 
         //Loading MembershiType table together with Customer table is called Eager loading
         public MembershipType MembershipType { get; set; }
-
-        [Display(Name = "Membership Type")]
+              
+        [Required]      
         public byte MembershipTypeId { get; set; }
     }
 }

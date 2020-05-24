@@ -21,11 +21,7 @@ namespace MovieRental.Controllers
         // GET: Customers
         public ActionResult Index()
         {
-            //Ef is not goind to execute this query in DB, this is called deferred execution
-            //It is executed when we iterate customer object
-            //To execute it immediately add ToList() method
-            var customers = _context.Customers.Include(nameof(Customer.MembershipType)).ToList();
-            return View(customers);
+            return View();
         }
 
         public ActionResult Details(int id)
@@ -40,17 +36,45 @@ namespace MovieRental.Controllers
         public ActionResult New()
         {
             var membershipTypes = _context.MembershipTypes.ToList();
-            var viewModel = new CustomerFormViewModel
-            {
+            var viewModel = new CustomerFormViewModel()
+            {                
                 MembershipTypes = membershipTypes
             };
 
             return View("AddEditForm", viewModel);
         }
 
+        public ActionResult Edit(int id)
+        {
+            var customer = _context.Customers.SingleOrDefault(c => c.Id == id);
+            if (customer == null)
+                return HttpNotFound();
+
+            var membershipTypes = _context.MembershipTypes.ToList();
+            var viewModel = new CustomerFormViewModel(customer)
+            {              
+                MembershipTypes = membershipTypes
+            };
+
+            //ovveride naming convention for view with existing view name
+            return View("AddEditForm", viewModel);
+        }
+
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Save(Customer customer)
         {
+            if (!ModelState.IsValid)
+            {
+                var membershipTypes = _context.MembershipTypes.ToList();
+                var viewModel = new CustomerFormViewModel(customer)
+                {                    
+                    MembershipTypes = membershipTypes
+                };
+                             
+                return View("AddEditForm", viewModel);
+            }
+
             if (customer.Id == 0)
                 _context.Customers.Add(customer);
             else
@@ -70,23 +94,6 @@ namespace MovieRental.Controllers
 
             _context.SaveChanges();
             return RedirectToAction(nameof(Index), "Customers");
-        }
-
-        public ActionResult Edit(int id)
-        {
-            var customer = _context.Customers.SingleOrDefault(c => c.Id == id);
-            if (customer == null)
-                return HttpNotFound();
-
-            var membershipTypes = _context.MembershipTypes.ToList();
-            var viewModel = new CustomerFormViewModel
-            {
-                Customer = customer,
-                MembershipTypes = membershipTypes
-            };
-
-            //ovveride naming convention for view with existing view name
-            return View("AddEditForm", viewModel);
         }
 
         protected override void Dispose(bool disposing)

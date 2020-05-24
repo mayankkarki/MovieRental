@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.WebSockets;
 
 namespace MovieRental.Controllers
 {
@@ -15,36 +16,6 @@ namespace MovieRental.Controllers
         public MoviesController()
         {
             _context = new MovieRentalDbContext();
-        }
-
-        // GET: Movies/Random
-        public ActionResult Random()
-        {
-            var movie = new Movie() { Name = "3 Idiots!" };
-
-            var customers = new List<Customer>()
-            {
-            new Customer{ Name = "Customer 1"},
-            new Customer{ Name = "Customer 2"}
-            };
-
-            var viewModel = new RandomMovieViewModel()
-            {
-                Movie = movie,
-                Customers = customers
-            };
-
-            return View(viewModel);
-
-            //var viewResult = new ViewResult();
-            //viewdata dictionary has model property which act as source of key value pairs
-            //viewResult.ViewData.Model = movie;
-            //return viewResult;
-
-            //return Content("Hello world");
-            //return HttpNotFound();
-            //return new EmptyResult();
-            //return RedirectToAction("Index", "Home", new { page = 1, sortBy = "Name" });
         }
 
         public ActionResult Details(int id)
@@ -70,16 +41,30 @@ namespace MovieRental.Controllers
         //}
 
         public ActionResult Index()
-        {
-            var movies = _context.Movies.Include(nameof(Movie.Genre)).ToList();
-            return View(movies);
+        {          
+            return View();
         }
 
         public ActionResult New()
         {
             var genres = _context.Genres.ToList();
-            var viewModel = new MovieViewModel
+            var viewModel = new MovieFormViewModel
             {
+                Genres = genres              
+            };
+
+            return View("AddEditForm", viewModel);
+        }
+
+        public ActionResult Edit(int id)
+        {
+            var movie = _context.Movies.SingleOrDefault(m => m.Id == id);
+            if (movie == null)
+                return HttpNotFound();
+
+            var genres = _context.Genres.ToList();
+            var viewModel = new MovieFormViewModel(movie)
+            {               
                 Genres = genres
             };
 
@@ -87,11 +72,35 @@ namespace MovieRental.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Save(Movie movie)
         {
-            _context.Movies.Add(movie);
-            _context.SaveChanges();
+            if (!ModelState.IsValid)
+            {
+                var genres = _context.Genres.ToList();
+                var viewModel = new MovieFormViewModel(movie)
+                {                 
+                    Genres = genres
+                };
 
+                return View("AddEditForm", viewModel);
+            }
+
+            if (movie.Id == 0)
+            {
+                movie.DateAdded = DateTime.Now;
+                _context.Movies.Add(movie);
+            }
+            else
+            {
+                var movieInDb = _context.Movies.Single(m => m.Id == movie.Id);
+                movieInDb.DateReleased = movie.DateReleased;
+                movieInDb.GenreId = movie.GenreId;
+                movieInDb.Name = movie.Name;
+                movieInDb.NumberInStock = movie.NumberInStock;
+            }
+
+            _context.SaveChanges();
             return RedirectToAction(nameof(Index));
         }
 
