@@ -24,7 +24,10 @@ namespace MovieRental.Controllers.Api
         //Get api/movies
         public IHttpActionResult Getmovies()
         {
-            var movies = _context.Movies.ToList().Select(_mapperInstance.Map<Movie, MovieDto>);
+            var movies = _context.Movies
+                .Include(nameof(Movie.Genre))
+                .ToList()
+                .Select(_mapperInstance.Map<Movie, MovieDto>);
             return Ok(movies);
         }
 

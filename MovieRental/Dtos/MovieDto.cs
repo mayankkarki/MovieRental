@@ -25,5 +25,7 @@ namespace MovieRental.Dtos
 
         [Required]
         public short GenreId { get; set; }
+
+        public GenreDto Genre { get; set; }
     }
 }
