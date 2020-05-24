@@ -34,7 +34,7 @@
             //to use for search
             //To prevent this, better use api to get json result and html is generated at client side
             //and datables will get data without filtering from html
-            $("#customersTable").DataTable({
+            var jCustomerTable = $("#customersTable").DataTable({
                 ajax: {
                     url: "/api/customers",
                     dataSrc: ""
@@ -67,8 +67,10 @@
                             method: "DELETE",
                             success: function () {
                                 //console.log("success");
-                                //
-                                button.parents("tr").remove();
+                                //just removing tr will not work, because jquery datatable keeps
+                                //data in memory to perform search and it needs to be refresh also
+                                //button.parents("tr").remove();
+                                jCustomerTable.row(button.parents("tr")).remove().draw();
                             }
                         });
                     }
