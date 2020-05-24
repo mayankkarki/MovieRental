@@ -296,6 +296,10 @@
     <Compile Include="Migrations\202005241340516_AddedAspNetIdentityModel.designer.cs">
       <DependentUpon>202005241340516_AddedAspNetIdentityModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202005241502320_PopulateUserAndRoleForMovieManager.cs" />
+    <Compile Include="Migrations\202005241502320_PopulateUserAndRoleForMovieManager.designer.cs">
+      <DependentUpon>202005241502320_PopulateUserAndRoleForMovieManager.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\AccountViewModels.cs" />
@@ -667,6 +671,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202005241340516_AddedAspNetIdentityModel.resx">
       <DependentUpon>202005241340516_AddedAspNetIdentityModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005241502320_PopulateUserAndRoleForMovieManager.resx">
+      <DependentUpon>202005241502320_PopulateUserAndRoleForMovieManager.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
