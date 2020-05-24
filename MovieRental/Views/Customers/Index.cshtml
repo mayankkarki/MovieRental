@@ -47,7 +47,7 @@
                         }
                     },
                     {
-                        data: "name"
+                        data: "membershipType.name"
                     },
                     {
                         data: "id",
@@ -67,6 +67,7 @@
                             method: "DELETE",
                             success: function () {
                                 //console.log("success");
+                                //
                                 button.parents("tr").remove();
                             }
                         });

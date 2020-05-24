@@ -14,6 +14,7 @@ namespace MovieRental.App_Start
         {
             CreateMap<Customer, CustomerDto>().ReverseMap().ForMember(dest => dest.Id, opt => opt.Ignore());
             CreateMap<Movie, MovieDto>().ReverseMap().ForMember(dest => dest.Id, opt => opt.Ignore());
+            CreateMap<MembershipType, MembershipTypeDto>();
         }
     }
 }

@@ -25,7 +25,10 @@ namespace MovieRental.Controllers.Api
         //Get api/customers
         public IHttpActionResult GetCustomers()
         {
-            var customers = _context.Customers.ToList().Select(_mapperInstance.Map<Customer, CustomerDto>);
+            var customers = _context.Customers
+                .Include(nameof(Customer.MembershipType))
+                .ToList()
+                .Select(_mapperInstance.Map<Customer, CustomerDto>);
             return Ok(customers);
         }
 
