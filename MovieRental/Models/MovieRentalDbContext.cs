@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity.EntityFramework;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -6,7 +7,7 @@ using System.Web;
 
 namespace MovieRental.Models
 {
-    public class MovieRentalDbContext : DbContext
+    public class MovieRentalDbContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<Customer> Customers { get; set; }
 
@@ -15,5 +16,10 @@ namespace MovieRental.Models
         public DbSet<Genre> Genres { get; set; }
 
         public DbSet<MembershipType> MembershipTypes { get; set; }
+
+        public static MovieRentalDbContext Create()
+        {
+            return new MovieRentalDbContext();
+        }
     }
 }
