@@ -41,10 +41,11 @@ namespace MovieRental.Controllers
         //}
 
         public ActionResult Index()
-        {          
-            return View();
+        {
+            return View(User.IsInRole(Constants.RoleNames.CanManageMovies) ? "List" : "ReadOnlyList");
         }
 
+        [Authorize(Roles = Constants.RoleNames.CanManageMovies)]
         public ActionResult New()
         {
             var genres = _context.Genres.ToList();
@@ -56,6 +57,7 @@ namespace MovieRental.Controllers
             return View("AddEditForm", viewModel);
         }
 
+        [Authorize(Roles = Constants.RoleNames.CanManageMovies)]
         public ActionResult Edit(int id)
         {
             var movie = _context.Movies.SingleOrDefault(m => m.Id == id);
@@ -73,6 +75,7 @@ namespace MovieRental.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = Constants.RoleNames.CanManageMovies)]
         public ActionResult Save(Movie movie)
         {
             if (!ModelState.IsValid)
