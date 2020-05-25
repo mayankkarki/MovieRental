@@ -17,7 +17,7 @@
     <AssemblyName>MovieRental</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <Use64BitIISExpress />
     <IISExpressSSLPort>44336</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
@@ -300,6 +300,10 @@
     <Compile Include="Migrations\202005241502320_PopulateUserAndRoleForMovieManager.cs" />
     <Compile Include="Migrations\202005241502320_PopulateUserAndRoleForMovieManager.designer.cs">
       <DependentUpon>202005241502320_PopulateUserAndRoleForMovieManager.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202005251429289_AddedDrivingLicenseToApplicationUser.cs" />
+    <Compile Include="Migrations\202005251429289_AddedDrivingLicenseToApplicationUser.designer.cs">
+      <DependentUpon>202005251429289_AddedDrivingLicenseToApplicationUser.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Startup.cs" />
@@ -677,6 +681,9 @@
     <EmbeddedResource Include="Migrations\202005241502320_PopulateUserAndRoleForMovieManager.resx">
       <DependentUpon>202005241502320_PopulateUserAndRoleForMovieManager.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005251429289_AddedDrivingLicenseToApplicationUser.resx">
+      <DependentUpon>202005251429289_AddedDrivingLicenseToApplicationUser.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -696,7 +703,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>13445</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>https://localhost:44336/</IISUrl>
+          <IISUrl>http://localhost/MovieRental</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
