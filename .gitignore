@@ -5,3 +5,4 @@ obj
 *.mdf
 *.ldf
 /MovieRental/MovieRental.csproj.user
+/fb.txt

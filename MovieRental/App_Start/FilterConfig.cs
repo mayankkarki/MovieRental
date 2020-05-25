@@ -9,6 +9,8 @@ namespace MovieRental
         {
             filters.Add(new HandleErrorAttribute());
             filters.Add(new AuthorizeAttribute());
+            //website is not allow to run over http
+            filters.Add(new RequireHttpsAttribute());
         }
     }
 }
