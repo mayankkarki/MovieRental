@@ -255,15 +255,18 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Api\CustomersController.cs" />
     <Compile Include="Controllers\Api\MoviesController.cs" />
+    <Compile Include="Controllers\Api\RentalsController.cs" />
     <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MoviesController.cs" />
+    <Compile Include="Controllers\RentalsController.cs" />
     <Compile Include="CustomValidations\Min18YearsIfAMember.cs" />
     <Compile Include="Dtos\CustomerDto.cs" />
     <Compile Include="Dtos\GenreDto.cs" />
     <Compile Include="Dtos\MembershipTypeDto.cs" />
     <Compile Include="Dtos\MovieDto.cs" />
+    <Compile Include="Dtos\RentalDto.cs" />
     <Compile Include="GlimpseSecurityPolicy.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -328,7 +331,16 @@
     <Compile Include="Migrations\202005260644563_AddedPhoneToIdentityUser.designer.cs">
       <DependentUpon>202005260644563_AddedPhoneToIdentityUser.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202005261456382_AddedRentalTable.cs" />
+    <Compile Include="Migrations\202005261456382_AddedRentalTable.designer.cs">
+      <DependentUpon>202005261456382_AddedRentalTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202005261543005_AddedNumberInStock.cs" />
+    <Compile Include="Migrations\202005261543005_AddedNumberInStock.designer.cs">
+      <DependentUpon>202005261543005_AddedNumberInStock.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Rental.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\AccountViewModels.cs" />
     <Compile Include="Models\Customer.cs" />
@@ -647,6 +659,7 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Movies\List.cshtml" />
+    <Content Include="Views\Rentals\NewRental.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -709,6 +722,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202005260644563_AddedPhoneToIdentityUser.resx">
       <DependentUpon>202005260644563_AddedPhoneToIdentityUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005261456382_AddedRentalTable.resx">
+      <DependentUpon>202005261456382_AddedRentalTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005261543005_AddedNumberInStock.resx">
+      <DependentUpon>202005261543005_AddedNumberInStock.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
