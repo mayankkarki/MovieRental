@@ -17,17 +17,20 @@ namespace MovieRental.Models
         [Required]
         public DateTime DateAdded { get; set; }
 
-        [Required()]     
+        [Required()]
         public DateTime DateReleased { get; set; }
-
-        [Required]      
-        [Range(1, 25)]
-        public short NumberInStock { get; set; }
 
         public Genre Genre { get; set; }
 
-        [Required]      
+        [Required]
         public short GenreId { get; set; }
 
+        [Required]
+        [Range(1, 25)]
+        public short NumberInStock { get; set; }
+
+        [Required]
+        [Range(1, 25)]
+        public short NumberAvailable { get; set; }
     }
 }
