@@ -13,6 +13,10 @@ namespace MovieRental.ViewModels
         [StringLength(255)]
         [Display(Name = "Driving License")]
         public string DrivingLicense { get; set; }
+
+        [Required]
+        [StringLength(50)]        
+        public string Phone { get; set; }
     }
 
     public class ExternalLoginListViewModel
@@ -89,6 +93,10 @@ namespace MovieRental.ViewModels
         [StringLength(255)]
         [Display(Name = "Driving License")]
         public string DrivingLicense { get; set; }
+
+        [Required]
+        [StringLength(50)]
+        public string Phone { get; set; }
     }
 
     public class ResetPasswordViewModel
