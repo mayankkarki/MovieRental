@@ -41,6 +41,7 @@ namespace MovieRental.Controllers.Api
             return Ok(_mapperInstance.Map<Movie, MovieDto>(movie));
         }
 
+        [Authorize(Roles = Constants.RoleNames.CanManageMovies)]
         //Post api/movies
         [HttpPost]
         public IHttpActionResult CreateMovie(MovieDto movieDto)
@@ -56,6 +57,7 @@ namespace MovieRental.Controllers.Api
             return Created(new Uri(Request.RequestUri + "/" + movie.Id), movieDto);
         }
 
+        [Authorize(Roles = Constants.RoleNames.CanManageMovies)]
         //Put api/movies/1
         [HttpPut]
         public IHttpActionResult UpdateMovie(int id, MovieDto movieDto)
@@ -72,6 +74,7 @@ namespace MovieRental.Controllers.Api
             return Ok();
         }
 
+        [Authorize(Roles = Constants.RoleNames.CanManageMovies)]
         //Delete api/movies/1
         [HttpDelete]
         public IHttpActionResult DeleteMovie(int id)
