@@ -19,6 +19,8 @@
         </footer>
     </div>
 
+    @*Scripts should always be define at the bottom of the body, so body gets render before
+        downloading scripts, which could take some time.*@
     @Scripts.Render("~/bundles/lib")
     @RenderSection("scripts", required: false)
 </body>
