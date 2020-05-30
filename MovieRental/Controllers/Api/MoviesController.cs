@@ -3,6 +3,7 @@ using MovieRental.Dtos;
 using MovieRental.Models;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -22,13 +23,16 @@ namespace MovieRental.Controllers.Api
         }
 
         //Get api/movies
-        public IHttpActionResult Getmovies()
+        public IHttpActionResult Getmovies(string query = null)
         {
             var movies = _context.Movies
-                .Include(nameof(Movie.Genre))
-                .ToList()
-                .Select(_mapperInstance.Map<Movie, MovieDto>);
-            return Ok(movies);
+                .Include(nameof(Movie.Genre)).Where(m=> m.NumberAvailable > 0);
+
+            if (!string.IsNullOrWhiteSpace(query))
+                movies = movies.Where(m => m.Name.ToLower().Contains(query.ToLower()));
+
+            var filteredMovies = movies.ToList().Select(_mapperInstance.Map<Movie, MovieDto>);
+            return Ok(filteredMovies);
         }
 
         //Get api/movies/1

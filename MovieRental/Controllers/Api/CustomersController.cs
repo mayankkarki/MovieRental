@@ -23,13 +23,17 @@ namespace MovieRental.Controllers.Api
         }
 
         //Get api/customers
-        public IHttpActionResult GetCustomers()
+        public IHttpActionResult GetCustomers(string query = null)
         {
-            var customers = _context.Customers
-                .Include(nameof(Customer.MembershipType))
-                .ToList()
-                .Select(_mapperInstance.Map<Customer, CustomerDto>);
-            return Ok(customers);
+            IEnumerable<Customer> customers = _context.Customers
+                .Include(nameof(Customer.MembershipType));
+
+            if (!string.IsNullOrWhiteSpace(query))
+                customers = customers.Where(c => c.Name.ToLower().Contains(query.ToLower()));
+
+            var filteredCustomers = customers.ToList()
+            .Select(_mapperInstance.Map<Customer, CustomerDto>);
+            return Ok(filteredCustomers);
         }
 
         //Get api/customers/1
