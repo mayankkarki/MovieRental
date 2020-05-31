@@ -18,6 +18,7 @@ namespace MovieRental.Controllers.Api
             _dbContext = new MovieRentalDbContext();
         }
 
+        [Authorize(Roles = Constants.RoleNames.CanManageMovies)]
         //api/rental
         [HttpPost]
         public IHttpActionResult CreateRental(RentalDto rentalDto)

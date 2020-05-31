@@ -8,6 +8,7 @@ namespace MovieRental.Controllers
 {
     public class RentalsController : Controller
     {
+        [Authorize(Roles = Constants.RoleNames.CanManageMovies)]
         // GET: Rentals
         public ActionResult NewRental()
         {

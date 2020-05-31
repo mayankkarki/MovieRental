@@ -32,7 +32,8 @@ namespace MovieRental.Controllers
 
             return View(customer);
         }
-
+              
+        [Authorize(Roles = Constants.RoleNames.CanManageMovies)]
         public ActionResult New()
         {
             var membershipTypes = _context.MembershipTypes.ToList();
@@ -43,7 +44,8 @@ namespace MovieRental.Controllers
 
             return View("AddEditForm", viewModel);
         }
-
+              
+        [Authorize(Roles = Constants.RoleNames.CanManageMovies)]
         public ActionResult Edit(int id)
         {
             var customer = _context.Customers.SingleOrDefault(c => c.Id == id);
@@ -61,7 +63,8 @@ namespace MovieRental.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]     
+        [Authorize(Roles = Constants.RoleNames.CanManageMovies)]
         public ActionResult Save(Customer customer)
         {
             if (!ModelState.IsValid)
