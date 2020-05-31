@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
@@ -55,9 +56,9 @@ namespace MovieRental
             //   consumerKey: "",
             //   consumerSecret: "");
 
-            //app.UseFacebookAuthentication(
-            //   appId: "",
-            //   appSecret: "");
+            app.UseFacebookAuthentication(
+               appId: ConfigurationManager.AppSettings["FacebookAppId"],
+               appSecret: ConfigurationManager.AppSettings["FacebookAppSecret"]);
 
             //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             //{
