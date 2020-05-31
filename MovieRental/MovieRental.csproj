@@ -537,6 +537,7 @@
     <Content Include="Content\DataTables\css\common.scss" />
     <Content Include="Content\toastr.scss" />
     <Content Include="Content\toastr.less" />
+    <Content Include="AppSettings.config" />
     <None Include="Properties\PublishProfiles\MovieRentalProfile.pubxml" />
     <None Include="Properties\PublishProfiles\TestingProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />

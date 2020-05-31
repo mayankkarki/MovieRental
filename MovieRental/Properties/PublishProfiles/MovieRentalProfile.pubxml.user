@@ -9,6 +9,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <_PublishTargetUrl>D:\Working\Learn\MVC learn\MovieRental\Publish</_PublishTargetUrl>
   </PropertyGroup>
   <ItemGroup>
+    <File Include="AppSettings.config">
+      <publishTime>05/31/2020 14:32:06</publishTime>
+    </File>
     <File Include="bin/Antlr3.Runtime.dll">
       <publishTime>09/10/2013 16:29:20</publishTime>
     </File>
@@ -115,10 +118,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/25/2012 11:48:56</publishTime>
     </File>
     <File Include="bin/MovieRental.dll">
-      <publishTime>05/31/2020 13:35:16</publishTime>
+      <publishTime>05/31/2020 14:23:24</publishTime>
     </File>
     <File Include="bin/MovieRental.pdb">
-      <publishTime>05/31/2020 13:35:16</publishTime>
+      <publishTime>05/31/2020 14:23:24</publishTime>
     </File>
     <File Include="bin/Newtonsoft.Json.dll">
       <publishTime>04/22/2019 01:06:16</publishTime>
@@ -1285,7 +1288,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/15/2020 20:30:44</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>05/31/2020 13:33:10</publishTime>
+      <publishTime>05/31/2020 15:08:21</publishTime>
     </File>
   </ItemGroup>
 </Project>
